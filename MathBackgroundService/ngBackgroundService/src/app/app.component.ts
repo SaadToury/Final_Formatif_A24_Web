@@ -122,7 +122,19 @@ export class AppComponent {
         }
       });
     });
-
+    this.hubConnection.on('RightAnswer', (data: MathQuestion) => {
+      this.zone.run(() => {
+        console.log(data);
+        this.nbRightAnswers++;
+        alert("bonne réponse")
+      });
+    });
+    this.hubConnection.on('WrongAnswer', (rightAnswer:number) => {
+      this.zone.run(() => {
+        console.log(rightAnswer);
+       alert("mauvaise réponse! La bonne réponse est : " + rightAnswer)
+      });
+    });
     this.hubConnection
       .start()
       .then(() => {
